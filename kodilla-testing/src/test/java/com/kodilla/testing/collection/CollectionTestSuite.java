@@ -36,7 +36,6 @@ public class CollectionTestSuite
     {
         //Given
         OddNumbersExterminator oddNumbersExterminator = new OddNumbersExterminator();
-        //When
         ArrayList<Integer> in = new ArrayList<>();
         in.add(1);
         in.add(2);
@@ -52,6 +51,8 @@ public class CollectionTestSuite
         expectedResult.add(4);
         expectedResult.add(6);
         expectedResult.add(8);
+
+        //When
         ArrayList<Integer> result = oddNumbersExterminator.exterminate(in);
 
         //Then
