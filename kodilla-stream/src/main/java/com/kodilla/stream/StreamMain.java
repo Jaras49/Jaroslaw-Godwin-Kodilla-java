@@ -1,6 +1,7 @@
 package com.kodilla.stream;
 
 import com.kodilla.stream.beautifier.PoemBeautifier;
+import com.kodilla.stream.iterate.NumbersGenerator;
 import com.kodilla.stream.lambda.ExpressionExecutor;
 import com.kodilla.stream.lambda.Processor;
 import com.kodilla.stream.reference.FunctionalCalculator;
@@ -33,13 +34,16 @@ public class StreamMain {
                 .beautify(stringToDecorate, (text -> "***"+text+"***")));
 
         System.out.println(poemBeautifier
-                .beautify(stringToDecorate, (text -> text.toUpperCase())));
+                .beautify(stringToDecorate, (String::toUpperCase)));
 
         System.out.println(poemBeautifier
-                .beautify(stringToDecorate, (text -> text.toLowerCase())));
+                .beautify(stringToDecorate, (String::toLowerCase)));
 
         System.out.println(poemBeautifier
                 .beautify(stringToDecorate, (text -> text.replace("Do", "Po"))));
+
+        //System.out.println("Using Stream to generate even numbers from 1 to 20");
+        //NumbersGenerator.generateEven(20);
 
     }
 }
