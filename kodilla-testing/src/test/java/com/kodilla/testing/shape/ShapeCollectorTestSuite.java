@@ -40,10 +40,12 @@ public class ShapeCollectorTestSuite {
         shapeCollector.addFigure(shape);
 
         //When
-        shapeCollector.removeFigure(shape);
+        boolean result = shapeCollector.removeFigure(shape);
+
 
         //Then
         Assert.assertThat(shapeCollector.getSize(), is(0));
+        Assert.assertTrue(result);
 
     }
     @Test
