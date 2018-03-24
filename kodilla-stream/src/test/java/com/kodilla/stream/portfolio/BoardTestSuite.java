@@ -2,8 +2,10 @@ package com.kodilla.stream.portfolio;
 
 import org.junit.Test;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
 import static org.junit.Assert.assertEquals;
@@ -138,5 +140,25 @@ public class BoardTestSuite {
 
         //Then
         assertEquals(2, longTasks);
+    }
+
+    public void testAddTaskListAverageWorkingOnTask(){
+
+        //Given
+        Board project = prepareTestData();
+
+        //When
+        List<TaskList> inProgressTasks = new ArrayList<>();
+        inProgressTasks.add(new TaskList("In progress"));
+
+
+        double result = project.getTaskLists().stream()
+                .filter(inProgressTasks::contains)
+                .flatMap(t -> t.getTasks().stream())
+                .mapToInt(t -> Period.between(t.getCreated(), LocalDate.now()).getDays())
+                .average().getAsDouble();
+
+        //Then
+        assertEquals(3, result, 0);
     }
 }
