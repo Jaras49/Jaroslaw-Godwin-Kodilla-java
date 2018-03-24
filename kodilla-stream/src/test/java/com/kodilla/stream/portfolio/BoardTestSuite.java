@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
 import static org.junit.Assert.assertEquals;
@@ -142,6 +141,7 @@ public class BoardTestSuite {
         assertEquals(2, longTasks);
     }
 
+    @Test
     public void testAddTaskListAverageWorkingOnTask(){
 
         //Given
@@ -159,6 +159,6 @@ public class BoardTestSuite {
                 .average().getAsDouble();
 
         //Then
-        assertEquals(3, result, 0);
+        assertEquals(10, result, 0);
     }
 }
