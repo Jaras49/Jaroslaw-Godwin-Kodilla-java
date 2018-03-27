@@ -5,20 +5,10 @@ import javax.swing.*;
 public class FirstChallenge {
 
     public double divide(double a, double b) throws ArithmeticException {
-
-
-        try {
-            if(b == 0)
-                throw new ArithmeticException();
-                return  a / b;
-
-        } catch (ArithmeticException e) {
-
-                JOptionPane.showMessageDialog(null, " Nie dziel przez 0 cholero");
-        } finally {
-            JOptionPane.showMessageDialog(null, "Try one more time");
+        if(b == 0){
+            throw new ArithmeticException();
         }
-        return 0;
+        return a / b;
     }
 
     /**
@@ -29,9 +19,15 @@ public class FirstChallenge {
 
         FirstChallenge firstChallenge = new FirstChallenge();
 
-        double result = firstChallenge.divide(3, 0);
+        try {
+            double result = firstChallenge.divide(3, 0);
+            System.out.println(result);
 
-        System.out.println(result);
+        } catch (ArithmeticException e) {
 
+            JOptionPane.showMessageDialog(null, "Nie dziel przez 0 cholero");
+        }finally {
+            System.out.println("END");
+        }
     }
 }
