@@ -12,8 +12,14 @@ public class FindFlightLogic  {
 
     public String findFlight(Flight flight) throws RouteNotFoundException {
 
-        if (flightMap.containsKey(flight.getArrivalAirport())){
+        if (flightMap.containsKey(flight.getArrivalAirport())) {
+
+            if (flightMap.get(flight.getArrivalAirport()))
             return "Flight from " + flight.getDepartureAirport() + " to " + flight.getArrivalAirport() + " is available";
+
+            else {
+                return "Flight from " + flight.getDepartureAirport() + " to " + flight.getArrivalAirport() + " is not available";
+            }
         }
         throw new RouteNotFoundException("Route not found");
     }
