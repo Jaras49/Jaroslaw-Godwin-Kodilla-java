@@ -7,21 +7,14 @@ import static org.junit.Assert.assertEquals;
 
 public class LoggerTestSuite {
 
-    private Logger logger;
-
-    @Before
-    public void setUp() throws Exception {
-        logger = new Logger();
-    }
-
     @Test
     public void shouldGetLastLog() {
 
         //Given
-        logger.log("sup");
+        Logger.getInstance().log("sup");
 
         //When
-        String lastLog = logger.getLastLog();
+        String lastLog = Logger.getInstance().getLastLog();
 
         //Then
         assertEquals("sup", lastLog);
