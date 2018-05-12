@@ -79,13 +79,16 @@ public class CompanyDaoTestSuite {
         companyDao.save(xxx);
 
         //When
-        List<Company> companies = companyDao.findCompaniesByFirst3Chars("xyz");
-        List<Employee> employees = employeeDao.findByFirstName("Josh");
 
-        //Then
         try {
-            Assert.assertEquals(1, companies.size());
+            List<Company> companies1 = companyDao.findCompaniesByFirst3Chars("xyz");
+            List<Employee> employees = employeeDao.findByFirstName("Josh");
+            List<Company> companies2 = companyDao.findCompaniesByFirst3Chars("xyzxxxxxxxxxxxxxx");
+
+            //Then
+            Assert.assertEquals(1, companies1.size());
             Assert.assertEquals(1, employees.size());
+            Assert.assertEquals(1, companies2.size());
         } finally {
             //Clean up
             companyDao.delete(xyz);

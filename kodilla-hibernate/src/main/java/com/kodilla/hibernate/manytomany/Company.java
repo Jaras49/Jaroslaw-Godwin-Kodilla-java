@@ -7,7 +7,7 @@ import java.util.List;
 
 @NamedNativeQuery(
         name = "Company.findCompaniesByFirst3Chars",
-        query = "SELECT * FROM COMPANIES WHERE COMPANY_NAME LIKE Concat(:CHARS, \"%\") ",
+        query = "SELECT * FROM COMPANIES WHERE SUBSTRING(COMPANY_NAME, 1, 3) LIKE SUBSTRING(:CHARS, 1, 3)",
         resultClass = Company.class
 )
 
