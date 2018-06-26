@@ -15,4 +15,7 @@ public interface EmployeeDao extends CrudRepository <Employee, Integer> {
 
     @Query
     List<Employee> findByFirstName(@Param("FIRSTNAME") String firstname);
+
+    @Query
+    List<Employee> findEmployeeBySubstring(@Param("NAME") String name);
 }
