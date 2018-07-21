@@ -1,7 +1,6 @@
 package com.kodilla.testing2.crudapp;
 
 import com.kodilla.testing2.config.WebDriverConfig;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -17,6 +16,8 @@ import static org.junit.Assert.assertTrue;
 public class CrudAppTestSuite {
 
     private static final String BASE_URL = "https://jaras49.github.io/";
+    private static final String TRELLO_URL = "https://trello.com/login";
+
     private WebDriver driver;
     private Random generator;
 
@@ -27,20 +28,15 @@ public class CrudAppTestSuite {
         generator = new Random();
     }
 
-    @After
-    public void cleanUpAfterTest() {
-        driver.close();
-    }
-
     @Test
     public void shouldCreateTrelloCard() throws InterruptedException {
         String name = createCrudAppTestTask();
         sendTestTaskToTrello(name);
-        assertTrue(checkTaskExistsInTrello(name));
+        assertTrue(checkTaskExistsInTrelloAndClenTrello(name));
+        cleanUp(name);
     }
 
-    private boolean checkTaskExistsInTrello(String name) throws InterruptedException {
-        final String TRELLO_URL = "https://trello.com/login";
+    private boolean checkTaskExistsInTrelloAndClenTrello(String name) throws InterruptedException {
         boolean result = false;
         WebDriver driver = WebDriverConfig.getWebdriver(WebDriverConfig.CHROME);
         driver.get(TRELLO_URL);
@@ -67,7 +63,6 @@ public class CrudAppTestSuite {
                 .size() > 0;
 
         driver.close();
-
         return result;
     }
 
@@ -102,15 +97,32 @@ public class CrudAppTestSuite {
         driver.findElements(By.xpath("//form[@class=\"datatable__row\"]")).stream()
                 .filter(anyForm -> anyForm.findElement(By.xpath(".//p[@class=\"datatable__field-value\"]"))
                         .getText().equals(taskName))
-                .forEach(theForm ->{
+                .forEach(theForm -> {
                     WebElement selectElement = theForm.findElement(By.xpath(".//select[1]"));
                     Select select = new Select(selectElement);
                     select.selectByIndex(2);
 
                     WebElement buttonCreateCard = theForm.findElement(By.xpath(".//button[contains(@class, \"card-creation\")]"));
                     buttonCreateCard.click();
-                    });
+                });
 
         Thread.sleep(5000);
+        driver.close();
+    }
+
+    private void cleanUp(String taskName) {
+
+        driver = WebDriverConfig.getWebdriver(WebDriverConfig.CHROME);
+        driver.get(BASE_URL);
+
+        while (!driver.findElement(By.xpath("//select[1]")).isDisplayed()) ;
+
+        driver.findElements(By.xpath("//form[@class=\"datatable__row\"]")).stream()
+                .filter(anyForm -> anyForm.findElement(By.xpath(".//p[@class=\"datatable__field-value\"]"))
+                        .getText().equals(taskName))
+                .forEach(task ->
+                        task.findElements(By.xpath(".//../../button")).stream()
+                                .filter(button -> button.getText().equals("Delete"))
+                                .forEach(button -> button.click()));
     }
 }
