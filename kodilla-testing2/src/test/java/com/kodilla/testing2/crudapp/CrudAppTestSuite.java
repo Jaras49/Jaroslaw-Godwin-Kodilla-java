@@ -32,11 +32,11 @@ public class CrudAppTestSuite {
     public void shouldCreateTrelloCard() throws InterruptedException {
         String name = createCrudAppTestTask();
         sendTestTaskToTrello(name);
-        assertTrue(checkTaskExistsInTrelloAndClenTrello(name));
+        assertTrue(checkTaskExistsInTrello(name));
         cleanUp(name);
     }
 
-    private boolean checkTaskExistsInTrelloAndClenTrello(String name) throws InterruptedException {
+    private boolean checkTaskExistsInTrello(String name) throws InterruptedException {
         boolean result = false;
         WebDriver driver = WebDriverConfig.getWebdriver(WebDriverConfig.CHROME);
         driver.get(TRELLO_URL);
